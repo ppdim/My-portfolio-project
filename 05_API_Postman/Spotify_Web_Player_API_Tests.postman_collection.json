@@ -41,8 +41,6 @@
 									"    ",
 									"    // Store the playlist id in the environment to add tracks in the future",
 									"    postman.setEnvironmentVariable(\"playlist_id\", playlist.id);",
-									"    postman.setNextRequest(\"Get Artist Top Tracks\");",
-									"    console.log(\"Created playlist: \" + environment.artist_name + \" Mix\");",
 									"}",
 									"",
 									"pm.test(\"Response time is less than 800 ms\", function () {",
@@ -144,7 +142,7 @@
 									"pm.environment.unset(\"playlist_name\");\r",
 									"\r",
 									"const playlist_n = [\r",
-									" 'My Playlist', 'My Beatles Playlist', 'Best Music', 'Rock playlist', 'My Songs'\r",
+									" 'My Playlist', 'My New Playlist', 'Best Music', 'Rock playlist', 'My Songs', 'Greatest Hits'\r",
 									"];\r",
 									"const randomPlaylist = playlist_n[Math.floor(Math.random() * playlist_n.length)];\r",
 									"pm.environment.set(\"playlist_name\", randomPlaylist);\r",
@@ -887,7 +885,7 @@
 			"name": "Negative Tests",
 			"item": [
 				{
-					"name": "TC26.1_Neg_Create a Playlist Copy_inv_name",
+					"name": "TC26.1_Neg_Create Playlist _inv_name",
 					"event": [
 						{
 							"listen": "test",
@@ -964,8 +962,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1011,7 +1007,7 @@
 					"response": []
 				},
 				{
-					"name": "TC26.2_Neg_Create a Playlist_inv_public",
+					"name": "TC26.2_Neg_Create Playlist_inv_public",
 					"event": [
 						{
 							"listen": "test",
@@ -1088,8 +1084,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1212,8 +1206,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1281,9 +1273,6 @@
 									"    case 429:\r",
 									"        tests[\"429 The app has exceeded its rate limits\"] = false;\r",
 									"        break;\r",
-									"    case 500:\r",
-									"        tests[\"500 Internal Server Error\"] = true;\r",
-									"        break;\r",
 									"    default:\r",
 									"        tests[\"Sorry, we are out of\" + responseCode.code] = false;\r",
 									"}\r",
@@ -1338,8 +1327,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1464,8 +1451,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -1511,7 +1496,7 @@
 					"response": []
 				},
 				{
-					"name": "TC28.1_Neg_Add Items to Playlist_position_negative_num",
+					"name": "TC28.1_Neg_Add Items to Playlist_invalid_data_in_body",
 					"event": [
 						{
 							"listen": "test",
@@ -1571,7 +1556,7 @@
 									"pm.test(\"The response body contains the correct data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.error.status).to.eql(400);\r",
-									"    pm.expect(jsonData.error.message).to.eql(\"Invalid position, must be positive.\");\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Error parsing JSON.\");  \r",
 									"    \r",
 									"});\r",
 									"\r",
@@ -1604,7 +1589,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"uris\": [\n        \"spotify:track:4wGSg2Qqpt2sGCWuAZj6EN\"\n    ],\n    \"position\": -1\n}"
+							"raw": "{\n    \n        one\n    \n    \"position\": 0\n}"
 						},
 						"url": {
 							"raw": "https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks",
@@ -1739,7 +1724,7 @@
 					"response": []
 				},
 				{
-					"name": "TC28.3_Neg_Add Items to Playlist_invalid_data_in_body",
+					"name": "TC28.3_Neg_Add Items to Playlist_position_negative_num",
 					"event": [
 						{
 							"listen": "test",
@@ -1799,7 +1784,7 @@
 									"pm.test(\"The response body contains the correct data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.error.status).to.eql(400);\r",
-									"    pm.expect(jsonData.error.message).to.eql(\"Error parsing JSON.\");  \r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Invalid position, must be positive.\");\r",
 									"    \r",
 									"});\r",
 									"\r",
@@ -1832,7 +1817,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"uris\": [\n        one\n    ],\n    \"position\": 0\n}"
+							"raw": "{\n    \"uris\": [\n        \"spotify:track:4wGSg2Qqpt2sGCWuAZj6EN\"\n    ],\n    \"position\": -1\n}"
 						},
 						"url": {
 							"raw": "https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks",
@@ -1853,7 +1838,7 @@
 					"response": []
 				},
 				{
-					"name": "TC29.1_Neg_Remove Playlist Items_invalid_uris",
+					"name": "TC29.1_Neg_Delete Playlist Items_invalid_uris",
 					"event": [
 						{
 							"listen": "test",
@@ -1966,7 +1951,7 @@
 					"response": []
 				},
 				{
-					"name": "TC29.2_Neg_Remove Playlist Items_invalid_body_data",
+					"name": "TC29.2_Neg_Delete Playlist Items_invalid_body_data",
 					"event": [
 						{
 							"listen": "test",
@@ -2058,7 +2043,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tracks\": [\n        {\n            \"uri\": one\n        }\n       \n    ]\n}"
+							"raw": "one"
 						},
 						"url": {
 							"raw": "https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks",
@@ -2079,7 +2064,7 @@
 					"response": []
 				},
 				{
-					"name": "TC29.3_Neg_Remove Playlist Items_Empty_body",
+					"name": "TC29.3_Neg_Delete Playlist Items_Empty_body",
 					"event": [
 						{
 							"listen": "test",
@@ -2192,7 +2177,7 @@
 					"response": []
 				},
 				{
-					"name": "TC30.1_Neg_Follow Playlist_empty_public_data",
+					"name": "TC30.1_Neg_Follow Playlist_empty_request_body",
 					"event": [
 						{
 							"listen": "test",
@@ -2285,7 +2270,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"public\": \r\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "https://api.spotify.com/v1/playlists/{{existing_playlist}}/followers",
